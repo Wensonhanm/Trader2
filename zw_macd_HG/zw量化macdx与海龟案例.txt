@@ -1,0 +1,56 @@
+zw量化macdx与海龟策略案例2018
+
+源码在网盘： http://pan.baidu.com/s/1jIg944u 
+zw量化资源，和零起点系列配套资源目录下都有
+
+这是两个完整的python量化案例，源自《零起点Python大数据与量化交易》第八章海龟策略案例。
+案例数据放在dat目录下，可以独立运行，无需zwdat数据包。
+程序采用python3，已经过教学版、python3.6,python3.7新版本测试通过。
+运行结果参见截图：macd01.png,macd02.png,macd03.png
+案例是纯python源码，适用于各种python3平台，如mac、linux，如果有冲突，大部分原因是缺乏相关的模块库，请大家自己安装。
+
+
+【文件名】
+zq809_tur_v9.py 是零起点1第9章的海龟案例
+zq809x_macd.py，你macd案例，是根据海龟案例改的
+
+【#1，案例代码修改说明】
+文件头import部分，使用了以下代码：
+import sys;
+sys.path.append("zwQuant/source/")
+自动添加zwQuant源码到工作目录，zwQuant程序源码，在案例程序子目录当中。
+
+
+【#2，案例代码修改说明】
+这两个案例程序，修改了一下数据源，案例数据放在dat目录下，可以无需zwdat数据包。
+刚才修改了一下数据源zwBackTest.py模块当中的bt_init初始化函数
+原代码：
+		qx.stkInxRDat='\\zwdat\\cn\\xday\\'    #大盘指数数据源路径
+修改后的代码		
+    if rdat.upper().find('zwdat')>-1:
+        qx.stkInxRDat='\\zwdat\\cn\\xday\\'    #大盘指数数据源路径
+    else:
+        qx.stkInxRDat=rdat    #大盘指数数据源路径
+        
+【#3，案例代码修改说明】
+zwStrategy.py模块当中的tur10_dataPre函数，这个主要是pandas的rolling函数接口变化，不修改只能在教学版当中使用。
+原代码#1：
+	d20[ksgn]=pd.rolling_max(d20['high'],d)
+修改后的代码#1
+	d20[ksgn]=d20['high'].rolling(window=d,center=False).max()	
+
+原代码#2：
+	d20[ksgn]=pd.rolling_min(d20['low'],d)
+修改后的代码#2	
+	d20[ksgn]=d20['low'].rolling(window=d,center=False).max()
+
+
+以上是主要的修改之处。
+更多细节请大家参考zwQuant源码，以及《零起点Python大数据与量化交易》
+
+
+
+TopQuant.vip
+TOP极宽量化开源组。
+
+2018,9,26
