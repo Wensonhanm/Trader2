@@ -7,7 +7,7 @@ import time
 
 #自笔趣阁网站下载
 # url="http://www.biquger.com/biquge/20242/"
-url="http://www.biquger.com/biquge/1447/"    #修真聊天群 更新到320，后从321开始
+url="http://www.biquger.com/biquge/85446"    #修真聊天群 更新到320，后从321开始
 # url="http://www.biquger.com/biquge/16583/"   #极品全能学生 更新到1512，后从1513开始
 tx_useragent={'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3073.0 Safari/537.36'}
 kv = {'applicable-device': 'pc'}      # 是一个标准的浏览器的身份标识的字段
@@ -51,8 +51,8 @@ titleName=soup.find_all(id="info")[0].select("h1")[0].text
 # f="星际强兵.txt"     #TXT 文档名称
 f=titleName+".txt"
 with open(f,"a",encoding='utf-8') as file:
-    for i in range(len(soup.find_all(id="list")[1].select("dd"))):            #soup是列表页，“list” 为列表div 的id，dd标签为每个章节
-    # for i in range(len(soup.find_all(id="list")[1].select("dd")))[8665:]:    #len(soup...)是章节数量; “[293,]”是自第293+1个章节开始循环
+    # for i in range(len(soup.find_all(id="list")[1].select("dd"))):            #soup是列表页，“list” 为列表div 的id，dd标签为每个章节
+    for i in range(len(soup.find_all(id="list")[1].select("dd")))[9:]:    #len(soup...)是章节数量; “[293,]”是自第293+1个章节开始循环
         # print("ggewg",i)
         for a in soup.find_all(id="list")[1].select("dd")[i]:                 # a 为每个章节的标签内容
             link_text = a['href']
@@ -60,7 +60,7 @@ with open(f,"a",encoding='utf-8') as file:
             s1 = requests.Session()
             s1.mount('http://', HTTPAdapter(max_retries=3))
             s1.mount('https://', HTTPAdapter(max_retries=3))
-            r1 = s1.get(link_text, headers=tx_useragent, verify=False, proxies=None, timeout=5)     # 超时6秒
+            r1 = s1.get(link_text, headers=tx_useragent, verify=False, proxies=None, timeout=3)     # 超时6秒
             # r1 = requests.get(link_text, headers=tx_useragent, verify=False, proxies=None, timeout=(3, 7))  # 超时6秒
             r1.encoding = r.apparent_encoding
             soup2 = BeautifulSoup(r1.text, 'lxml')
